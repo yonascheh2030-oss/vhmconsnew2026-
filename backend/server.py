@@ -7,6 +7,7 @@ load_dotenv(ROOT_DIR / ".env")
 
 import logging
 import uuid
+import asyncio
 from datetime import datetime, timezone
 from typing import List, Optional
 
@@ -21,7 +22,10 @@ from bson import ObjectId
 
 from scoring import compute_lead_score, estimated_value
 from storage import init_storage, put_object, get_object, APP_NAME, MIME_TYPES
-from emailer import send_new_lead_notification, send_customer_confirmation
+from emailer import (
+    send_new_lead_notification, send_customer_confirmation, send_custom_email, send_marketing_email,
+)
+from pdf import build_lead_pdf
 from auth import (
     verify_password, create_access_token, decode_access_token, seed_admin,
 )
@@ -69,6 +73,7 @@ class LeadCreate(BaseModel):
     starttermijn: str = "unknown"
     heeft_deadline: bool = False
     deadline: Optional[str] = None
+    plaatsbezoek_datum: Optional[str] = None
     straat: Optional[str] = Field(default=None, max_length=200)
     huisnummer: Optional[str] = Field(default=None, max_length=30)
     postcode: Optional[str] = Field(default=None, max_length=20)
@@ -92,6 +97,21 @@ class LoginInput(BaseModel):
 
 class StatusUpdate(BaseModel):
     status: str
+
+
+class EmailSend(BaseModel):
+    subject: str = Field(min_length=1, max_length=200)
+    body: str = Field(min_length=1, max_length=8000)
+
+
+class Campaign(BaseModel):
+    subject: str = Field(min_length=1, max_length=200)
+    body: str = Field(min_length=1, max_length=8000)
+    cta_url: Optional[str] = None
+    cta_label: Optional[str] = None
+    lead_ids: Optional[List[str]] = None
+    category: Optional[str] = None
+    status: Optional[str] = None
 
 
 # ----------------------------- Auth dep -----------------------------
@@ -161,9 +181,27 @@ async def upload_file(file: UploadFile = File(...)):
 
 
 # ----------------------------- Public: create lead -----------------------------
-def _send_lead_emails(doc: dict):
-    send_new_lead_notification(doc)
-    send_customer_confirmation(doc)
+async def _log_email(lead_id, result, etype):
+    if not result:
+        return
+    await db.emails.insert_one({
+        "id": str(uuid.uuid4()),
+        "lead_id": lead_id,
+        "to": result.get("to"),
+        "subject": result.get("subject"),
+        "html": result.get("html"),
+        "type": etype,
+        "status": "verzonden" if result.get("ok") else "mislukt",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+
+
+async def _process_lead_emails(doc: dict):
+    lead_id = doc.get("id")
+    notif = await asyncio.to_thread(send_new_lead_notification, doc)
+    await _log_email(lead_id, notif, "notification")
+    conf = await asyncio.to_thread(send_customer_confirmation, doc)
+    await _log_email(lead_id, conf, "confirmation")
 
 
 @api_router.post("/leads", status_code=201)
@@ -181,7 +219,7 @@ async def create_lead(payload: LeadCreate, background_tasks: BackgroundTasks):
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.leads.insert_one(dict(doc))
     doc.pop("_id", None)
-    background_tasks.add_task(_send_lead_emails, doc)
+    background_tasks.add_task(_process_lead_emails, doc)
     logger.info("Nieuwe lead %s — score %s (%s) — %s", doc["id"], doc["score"], doc["category"], doc.get("gemeente"))
     return {"id": doc["id"], "score": doc["score"], "category": doc["category"]}
 
@@ -338,6 +376,69 @@ async def serve_file(path: str, request: Request, token: Optional[str] = Query(N
         logger.error("Bestand ophalen mislukt: %s", e)
         raise HTTPException(status_code=404, detail="Bestand niet gevonden.")
     return Response(content=data, media_type=ctype)
+
+
+@api_router.get("/admin/leads/{lead_id}/pdf")
+async def admin_lead_pdf(lead_id: str, user=Depends(get_current_user)):
+    doc = await db.leads.find_one({"id": lead_id})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Lead niet gevonden.")
+    pdf_bytes = build_lead_pdf(doc)
+    fn = f"BetoDecor-aanvraag-{(doc.get('achternaam') or 'lead')}.pdf"
+    return Response(content=pdf_bytes, media_type="application/pdf",
+                    headers={"Content-Disposition": f'attachment; filename="{fn}"'})
+
+
+@api_router.get("/admin/leads/{lead_id}/emails")
+async def admin_lead_emails(lead_id: str, user=Depends(get_current_user)):
+    docs = await db.emails.find({"lead_id": lead_id}).sort("created_at", -1).to_list(200)
+    return [_clean(d) for d in docs]
+
+
+@api_router.post("/admin/leads/{lead_id}/email")
+async def admin_send_email(lead_id: str, payload: EmailSend, user=Depends(get_current_user)):
+    lead = await db.leads.find_one({"id": lead_id})
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead niet gevonden.")
+    result = await asyncio.to_thread(send_custom_email, lead.get("email"), payload.subject, payload.body)
+    await _log_email(lead_id, result, "manual")
+    if not result.get("ok"):
+        raise HTTPException(status_code=502, detail="E-mail versturen mislukt. Controleer de SMTP-instellingen.")
+    return {"ok": True}
+
+
+@api_router.get("/admin/emails")
+async def admin_all_emails(user=Depends(get_current_user), limit: int = Query(150)):
+    docs = await db.emails.find({}).sort("created_at", -1).to_list(limit)
+    return [_clean(d) for d in docs]
+
+
+@api_router.post("/admin/campaign")
+async def admin_campaign(payload: Campaign, user=Depends(get_current_user)):
+    query = {}
+    if payload.lead_ids:
+        query = {"id": {"$in": payload.lead_ids}}
+    else:
+        if payload.category:
+            query["category"] = payload.category
+        if payload.status:
+            query["status"] = payload.status
+    leads = await db.leads.find(query).to_list(2000)
+    seen, recipients = set(), []
+    for l in leads:
+        e = (l.get("email") or "").lower()
+        if e and e not in seen:
+            seen.add(e)
+            recipients.append(l)
+    sent = failed = 0
+    for l in recipients:
+        result = await asyncio.to_thread(send_marketing_email, l.get("email"), payload.subject, payload.body, payload.cta_url, payload.cta_label)
+        await _log_email(l.get("id"), result, "campaign")
+        if result.get("ok"):
+            sent += 1
+        else:
+            failed += 1
+    return {"recipients": len(recipients), "sent": sent, "failed": failed}
 
 
 app.include_router(api_router)

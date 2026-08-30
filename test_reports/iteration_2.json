@@ -1,0 +1,41 @@
+{
+  "summary": "Frontend-focused E2E test of this round's new features on the public preview URL (1920x1080 desktop + 390x844 mobile spot-check). Verified: (1) home 'Team & wagenpark' section renders with both branded images actually loading (naturalWidth 1264 on team-image + van-image from static.prod-images.emergentagent.com) and the Realisaties gallery renders 7 tiles with ZERO broken images (page-wide broken-image scan returned []); (2) full 7-step wizard incl. the new 'Voorkeursdatum plaatsbezoek' date field (data-testid plaatsbezoek-datum, label 'Voorkeursdatum plaatsbezoek (optioneel)') -> submitted successfully and landed on /bedankt (now with footer, previous iteration's issue fixed); (3) admin login -> /admin with nav-marketing link; (4) lead detail PDF download: GET /api/admin/leads/{id}/pdf -> 200, real %PDF file, 3934 bytes, filename 'BetoDecor-aanvraag-Plaatsbezoek.pdf'; (5) email composer POST -> request made (502 for the @example.com address, EXPECTED), email history rendered with statuses ('verzonden'/'mislukt') and 'Bekijk' opened the correctly branded rendered email in a new tab; (6) Mailmarketing page: audience 'Alleen HOT' selected, POST /api/admin/campaign -> 200, 2 campaign entries appeared in campaign-history (status 'mislukt' for @example.com recipients, expected); (7) regressions: lang-fr/en/es all switch home copy, status-bezocht/nieuw PATCH -> 200 and persists across reload, logout returns to /admin/login. Only ONE real (minor) frontend bug found; everything else passes.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/admin/leads/{id}/email", "issue": "Returns 502 for undeliverable addresses which is correct, BUT the attempt IS already persisted to db.emails as type 'manual' status 'mislukt' before the raise. Consider returning 200 with {status:'mislukt'} (or 207) so clients can distinguish 'not logged' from 'logged but delivery failed' — this is what causes the UI issue below. Not blocking."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Admin lead detail — email composer on delivery failure", "issue": "sendMail() only calls loadEmails() in the success branch; the catch branch just toasts. The backend already persisted the attempt as 'mislukt', so the 'Verzonden e-mails' list does NOT update after a failed send (verified: 2 entries before, 2 after, 3 after a manual page reload). Also subject/body are only cleared on success (acceptable) but the admin gets no visible record of the attempt. Fix: call loadEmails() in a finally block (or in catch).", "affected_selectors": ["[data-testid=\"email-send\"]", "[data-testid=\"email-history\"]"]}
+    ],
+    "design_issues": [
+      {"screen": "Admin lead detail — Project panel", "issues": ["'Voorkeur plaatsbezoek' shows the raw ISO value '2026-09-15' while every other date on the page uses fmtDate ('30 aug 2026'). Run it through fmtDate for consistency."]},
+      {"screen": "Wizard step 5 (Planning)", "issues": ["Both date inputs (plaatsbezoek-datum and deadline-date) use the native browser <input type=date> picker instead of a styled shadcn calendar; on desktop Chrome it renders as MM/DD/YYYY (US format) inside an otherwise Dutch/BE form. Cosmetic/locale inconsistency only — value is submitted correctly."]},
+      {"screen": "Home — Realisaties gallery", "issues": ["6 of the 7 gallery tiles are generic Unsplash/Pexels stock photos; only realisatie-1 uses a branded static.prod-images asset. Content note (not a defect): the section is titled 'Realisaties' (own realisations) so stock imagery is slightly misleading."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/backend/tests/cleanup_qa_data.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "LeadDetail.jsx sendMail(): move loadEmails() into finally so failed send attempts (already logged server-side as 'mislukt') show up in the 'Verzonden e-mails' history without a manual reload.",
+    "LeadDetail.jsx: format the 'Voorkeur plaatsbezoek' value with fmtDate instead of printing the raw ISO date.",
+    "Optional/cosmetic: replace the native date inputs in Wizard step 5 with the shadcn calendar for nl-BE date formatting."
+  ],
+  "critical_code_review_comments": [
+    "LeadDetail.jsx sendMail(): error branch swallows the state refresh — the only place in the file where a mutation does not re-sync server state.",
+    "Marketing.jsx send(): same pattern is handled better (loadRecent() after success) but a hard failure (non-200) also skips the refresh; campaign rows are per-recipient so a partial failure still refreshes only because the API returns 200.",
+    "Marketing.jsx: the 'Bekijk' button in campaign-history has no data-testid (the lead-detail equivalent has email-view-<id>); add campaign-view-<id> for testability.",
+    "Marketing.jsx viewEmail()/LeadDetail.jsx viewEmail(): window.open + document.write of server HTML is fine for admin-authored content, but will silently no-op when the popup blocker is active — no user feedback.",
+    "Carry-over from iteration 1 (still unfixed): login rate-limit key uses request.client.host (rotating ingress IP) so the 5-attempt lockout never triggers; CORS_ORIGINS='*' with allow_credentials=True."
+  ],
+  "updated_files": ["/app/backend/tests/cleanup_qa_data.py"],
+  "success_rate": {"backend": "not re-run this round (frontend-scoped request); all API calls observed from the UI returned expected codes: PDF 200, campaign 200, status PATCH 200, manual email 502 (expected for @example.com)", "frontend": "95% — 7/7 requested flows pass, 1 minor integration bug (email history not refreshed on failed send)"},
+  "seed_data_creation": "Created 1 wizard lead (TESTQA Plaatsbezoek, testqa.plaatsbezoek@example.com, plaatsbezoek_datum 2026-09-15, score 73) + 1 HOT campaign to 2 seeded @example.com leads. ALL cleaned up afterwards via /app/backend/tests/cleanup_qa_data.py — DB is back to the 8 seeded leads with 0 TESTQA email logs. Note: the wizard submission did send a REAL notification email to roberto@betodecorexpert.be (status 'verzonden').",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "roberto@betodecorexpert.be / BetoDecor2026! — verified working via UI login",
+  "context_for_next_testing_agent": "Route for lead detail is /admin/lead/:id (SINGULAR 'lead') — not /admin/leads/:id; a wait_for_url('**/admin/leads/**') will time out. PDF download works with page.expect_download (suggested filename BetoDecor-aanvraag-<achternaam>.pdf). Sonner toasts auto-dismiss in <15s so assert on network responses instead of toast text. Campaign/manual emails to seeded @example.com leads always fail SMTP (502 / status 'mislukt') — expected, do not flag. Use /app/backend/tests/cleanup_qa_data.py to remove TESTQA leads/emails after wizard tests. Iteration 1 backend suite (24 pytest) is at /app/backend/tests/backend_test.py and was not re-run this round.",
+  "rca_of_the_issue": "Email-history-not-refreshing RCA: backend POST /api/admin/leads/{id}/email calls _log_email(...) FIRST and only then raises HTTPException(502) on delivery failure, so the record exists. Frontend LeadDetail.jsx sendMail() places loadEmails() inside the try block after the await, so the 502 short-circuits to catch and the history state is never re-fetched. Reproduction: open a seeded lead (@example.com), send any email, observe error toast and unchanged email-history count; reload the page and the 'Handmatig / mislukt' entry appears. Fix: move loadEmails() to the finally block."
+}

@@ -5,11 +5,13 @@ import { IMAGES } from "@/constants/betodecor";
 export const Realisaties = () => {
   const { t } = useLang();
   const tiles = [
-    { src: IMAGES.living, tag: t.realisaties.tags[0], span: "lg:col-span-7 h-[280px] lg:h-[420px]" },
-    { src: IMAGES.bathroom, tag: t.realisaties.tags[1], span: "lg:col-span-5 h-[280px] lg:h-[420px]" },
-    { src: IMAGES.kitchen, tag: t.realisaties.tags[2], span: "lg:col-span-5 h-[240px] lg:h-[320px]" },
-    { src: IMAGES.bathroom2, tag: t.realisaties.tags[1], span: "lg:col-span-4 h-[240px] lg:h-[320px]" },
-    { src: IMAGES.blueprint, tag: t.realisaties.tags[3], span: "lg:col-span-3 h-[240px] lg:h-[320px]" },
+    { src: IMAGES.living, tag: t.realisaties.tags[0], span: "lg:col-span-7 h-[280px] lg:h-[440px]" },
+    { src: IMAGES.facade, tag: t.realisaties.tags[0], span: "lg:col-span-5 h-[280px] lg:h-[440px]" },
+    { src: IMAGES.bathroom, tag: t.realisaties.tags[1], span: "lg:col-span-4 h-[240px] lg:h-[300px]" },
+    { src: IMAGES.kitchen, tag: t.realisaties.tags[2], span: "lg:col-span-4 h-[240px] lg:h-[300px]" },
+    { src: IMAGES.bathroom2, tag: t.realisaties.tags[1], span: "lg:col-span-4 h-[240px] lg:h-[300px]" },
+    { src: IMAGES.construction, tag: t.realisaties.tags[3], span: "lg:col-span-8 h-[240px] lg:h-[320px]" },
+    { src: IMAGES.blueprint, tag: t.realisaties.tags[3], span: "lg:col-span-4 h-[240px] lg:h-[320px]" },
   ];
   return (
     <section id="realisaties" className="bg-beto-surface py-20 lg:py-28 border-t border-beto-border">

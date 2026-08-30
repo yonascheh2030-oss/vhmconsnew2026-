@@ -13,6 +13,7 @@ import Confirmation from "@/pages/Confirmation";
 import AdminLogin from "@/pages/admin/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import LeadDetail from "@/pages/admin/LeadDetail";
+import Marketing from "@/pages/admin/Marketing";
 
 const PATHS = {
   home: { nl: "/", fr: "/fr", en: "/en", es: "/es" },
@@ -53,6 +54,7 @@ function App() {
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/admin/lead/:id" element={<ProtectedRoute><LeadDetail /></ProtectedRoute>} />
+              <Route path="/admin/marketing" element={<ProtectedRoute><Marketing /></ProtectedRoute>} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

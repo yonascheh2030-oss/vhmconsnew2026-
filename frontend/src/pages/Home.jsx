@@ -5,6 +5,7 @@ import { Services } from "@/components/site/Services";
 import { WhyChoose } from "@/components/site/WhyChoose";
 import { Process } from "@/components/site/Process";
 import { Realisaties } from "@/components/site/Realisaties";
+import { TeamFleet } from "@/components/site/TeamFleet";
 import { Region } from "@/components/site/Region";
 import { CTASection } from "@/components/site/CTASection";
 import { Footer } from "@/components/site/Footer";
@@ -29,6 +30,7 @@ export default function Home() {
         <WhyChoose />
         <Process />
         <Realisaties />
+        <TeamFleet />
         <Region />
         <CTASection />
       </main>

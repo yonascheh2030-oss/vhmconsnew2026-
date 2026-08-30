@@ -41,7 +41,7 @@ const Choice = ({ active, onClick, children, testid, className = "" }) => (
 const empty = {
   project_types: [], oppervlakte: "", verdiepingen: "", kamers: "", bouwjaar: "",
   bewoond: "", renovatie_type: "", works: [], beschrijving: "", budget: "",
-  starttermijn: "", heeft_deadline: false, deadline: "", straat: "", huisnummer: "",
+  starttermijn: "", heeft_deadline: false, deadline: "", plaatsbezoek_datum: "", straat: "", huisnummer: "",
   postcode: "", gemeente: "", land: "België", files: [], voornaam: "", achternaam: "",
   telefoon: "", email: "", bedrijfsnaam: "", btw: "", opmerkingen: "",
 };
@@ -128,6 +128,7 @@ export default function Wizard() {
       starttermijn: form.starttermijn || "unknown",
       heeft_deadline: form.heeft_deadline,
       deadline: form.deadline || null,
+      plaatsbezoek_datum: form.plaatsbezoek_datum || null,
       straat: form.straat || null,
       huisnummer: form.huisnummer || null,
       postcode: form.postcode || null,
@@ -389,6 +390,10 @@ const StepPlanning = ({ form, set, setForm, w }) => (
           <input data-testid="deadline-date" type="date" value={form.deadline} onChange={set("deadline")} className={inputCls} />
         </div>
       )}
+    </div>
+    <div>
+      <label className={labelCls}>{w.plaatsbezoek}</label>
+      <input data-testid="plaatsbezoek-datum" type="date" value={form.plaatsbezoek_datum} onChange={set("plaatsbezoek_datum")} className={inputCls} />
     </div>
   </div>
 );

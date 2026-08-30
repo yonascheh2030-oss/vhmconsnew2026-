@@ -42,13 +42,20 @@ project_types[], oppervlakte, verdiepingen, kamers, bouwjaar, bewoond, renovatie
 - Backend: lead scoring-engine, object-storage uploads, JWT-auth + bcrypt + brute-force lockout (X-Forwarded-For), SMTP-mailer (melding + klantbevestiging, meertalig), 8 realistische seed-leads.
 - Admin-CRM: beveiligde login, dashboard met KPI's + gesorteerde leadtabel (score/categorie/status-badges) + filters, lead-detailpagina (project, media-gallery, contact-acties, score-breakdown, statuswijziging).
 
+### 2026-08-30 — E-mail live, PDF, CRM-uitbreiding & branding
+- SMTP geactiveerd (mailprotect.be): automatische lead-melding naar Roberto + klantbevestiging; alle mails met professionele BetoDecor-template & handtekening. Alle verzendingen gelogd in `emails`-collectie.
+- Admin lead-detail: **PDF-download** (reportlab) van de aanvraag, **e-mail versturen** naar klant + **geschiedenis** van verzonden mails ("Bekijk").
+- Nieuwe **Mailmarketing**-pagina: gebrande campagne-mails naar doelgroep (Alle/HOT/HIGH/NORMAAL/LAAG) met optionele CTA-knop.
+- Wizard stap 5: optioneel veld **Voorkeursdatum plaatsbezoek** (4 talen).
+- Nieuwe homepage-sectie **Team & wagenpark** met gebrande BetoDecor-bedrijfswagens + team (AI-gegenereerd, on-brand) en uitgebreide realisaties-galerij.
+
 ## Geverifieerd
 - Backend: 24/24 pytest (auth, scoring-caps, upload-validatie, beveiligde /files, admin filters/stats/status). Extra: lockout 429 na 5 pogingen, /files 401/404, /auth/me 200.
 - Frontend (testing agent): home + taalwissel, volledige wizard-flow + validatie + submit → /bedankt, admin login/dashboard/filters/detail/status/logout, mobiel. Geen console/pagina-fouten.
 
 ## Backlog (prioriteit)
-- P0: **SMTP-wachtwoord** van roberto@betodecorexpert.be invullen (`SMTP_PASSWORD` in backend/.env) om lead-meldingen + klantbevestigingen live te zetten.
-- P1: Echte realisatie-foto's van eigen projecten i.p.v. stockbeelden.
+- ✅ (klaar) SMTP-verzending live — lead-meldingen + klantbevestigingen + handmatige mails + campagnes.
+- P1: Echte realisatie-foto's van eigen projecten i.p.v. stockbeelden (interieurtegels).
 - P1: Domein betodecorexpert.be koppelen + deploy.
 - P2: Meertalige SEO-landingspagina's per gemeente (renovatie) voor vindbaarheid.
 - P2: Uitbreidbaar CRM: extra statussen, notities, agenda/plaatsbezoek, PDF-offerte, WhatsApp/CRM-koppeling.

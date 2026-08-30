@@ -29,6 +29,14 @@ export const IMAGES = {
     "https://images.unsplash.com/photo-1664662568348-24b1482b6354?crop=entropy&cs=srgb&fm=jpg&q=80&w=1200&ixlib=rb-4.1.0",
   blueprint:
     "https://images.pexels.com/photos/4134179/pexels-photo-4134179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1200",
+  van:
+    "https://static.prod-images.emergentagent.com/jobs/4f0c0b54-6234-4007-b180-bfdf30f2c829/images/ef159b7aab5de1511de99280aabef668744799beef3eb924c2719dd72b15dc1f.jpeg",
+  fleet:
+    "https://static.prod-images.emergentagent.com/jobs/4f0c0b54-6234-4007-b180-bfdf30f2c829/images/0f77627170ab1c0d1bd8455fbad24823a4a670d124eefa890e33001a2ad46cfb.jpeg",
+  team:
+    "https://static.prod-images.emergentagent.com/jobs/4f0c0b54-6234-4007-b180-bfdf30f2c829/images/b64a95937e26d32469c77d3744c2c59d972afca81321388c234702518812eca3.jpeg",
+  facade:
+    "https://static.prod-images.emergentagent.com/jobs/4f0c0b54-6234-4007-b180-bfdf30f2c829/images/57fa188832657c01964d3d88bd81b61757e59e89a0165f14cee205512554bc71.jpeg",
 };
 
 // Wizard option keys — MUST match backend scoring.py keys.

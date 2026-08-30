@@ -83,6 +83,12 @@ const NL = {
       "Een greep uit renovaties van woningen, badkamers en keukens. Kwaliteit die u ziet én voelt.",
     tags: ["Woningrenovatie", "Badkamer", "Keuken", "Bedrijfspand"],
   },
+  team: {
+    label: "Team & wagenpark",
+    title: "Een vast, herkenbaar team op elke werf",
+    body: "Bij BetoDecor werkt u met een eigen, ervaren team. Onze herkenbare bedrijfswagens staan garant voor betrouwbaar vakmanschap en één duidelijk aanspreekpunt van start tot oplevering.",
+    points: ["Eigen vakmensen", "Herkenbaar op de werf", "Eén aanspreekpunt", "Nette, veilige werf"],
+  },
   region: {
     label: "Werkgebied",
     title: "Actief in Zaventem, Brussel & Vlaams-Brabant",
@@ -188,6 +194,7 @@ const NL = {
     deadlineYes: "Ja",
     deadlineNo: "Nee",
     deadlineDate: "Gewenste opleverdatum",
+    plaatsbezoek: "Voorkeursdatum plaatsbezoek (optioneel)",
     loc: { straat: "Straat", huisnummer: "Nr.", postcode: "Postcode", gemeente: "Gemeente", land: "Land" },
     upload: {
       title: "Foto's en plannen",
@@ -298,6 +305,12 @@ const FR = {
     intro: "Un aperçu de rénovations de maisons, salles de bain et cuisines. Une qualité qui se voit et se ressent.",
     tags: ["Rénovation maison", "Salle de bain", "Cuisine", "Bâtiment pro"],
   },
+  team: {
+    label: "Équipe & flotte",
+    title: "Une équipe fixe et reconnaissable sur chaque chantier",
+    body: "Chez BetoDecor, vous travaillez avec notre propre équipe expérimentée. Nos camionnettes reconnaissables sont un gage de savoir-faire fiable et d'un seul interlocuteur, du début à la livraison.",
+    points: ["Artisans en interne", "Reconnaissables sur le chantier", "Un seul interlocuteur", "Chantier propre et sûr"],
+  },
   region: {
     label: "Zone d'intervention",
     title: "Actif à Zaventem, Bruxelles & Brabant flamand",
@@ -403,6 +416,7 @@ const FR = {
     deadlineYes: "Oui",
     deadlineNo: "Non",
     deadlineDate: "Date de livraison souhaitée",
+    plaatsbezoek: "Date souhaitée pour la visite (facultatif)",
     loc: { straat: "Rue", huisnummer: "N°", postcode: "Code postal", gemeente: "Commune", land: "Pays" },
     upload: {
       title: "Photos et plans",
@@ -513,6 +527,12 @@ const EN = {
     intro: "A selection of home, bathroom and kitchen renovations. Quality you can see and feel.",
     tags: ["Home renovation", "Bathroom", "Kitchen", "Commercial"],
   },
+  team: {
+    label: "Team & fleet",
+    title: "A fixed, recognisable team on every site",
+    body: "At BetoDecor you work with our own experienced team. Our recognisable branded vans stand for reliable craftsmanship and a single point of contact, from start to delivery.",
+    points: ["In-house craftsmen", "Recognisable on site", "One point of contact", "Clean, safe site"],
+  },
   region: {
     label: "Service area",
     title: "Active in Zaventem, Brussels & Flemish Brabant",
@@ -618,6 +638,7 @@ const EN = {
     deadlineYes: "Yes",
     deadlineNo: "No",
     deadlineDate: "Desired completion date",
+    plaatsbezoek: "Preferred site-visit date (optional)",
     loc: { straat: "Street", huisnummer: "No.", postcode: "Postal code", gemeente: "Municipality", land: "Country" },
     upload: {
       title: "Photos and plans",
@@ -728,6 +749,12 @@ const ES = {
     intro: "Una muestra de reformas de viviendas, baños y cocinas. Calidad que se ve y se siente.",
     tags: ["Reforma vivienda", "Baño", "Cocina", "Local comercial"],
   },
+  team: {
+    label: "Equipo y flota",
+    title: "Un equipo fijo y reconocible en cada obra",
+    body: "En BetoDecor trabaja con nuestro propio equipo experimentado. Nuestras furgonetas rotuladas son garantía de un trabajo fiable y de un único interlocutor, desde el inicio hasta la entrega.",
+    points: ["Profesionales propios", "Reconocibles en la obra", "Un único interlocutor", "Obra limpia y segura"],
+  },
   region: {
     label: "Zona de trabajo",
     title: "Activos en Zaventem, Bruselas y Brabante Flamenco",
@@ -833,6 +860,7 @@ const ES = {
     deadlineYes: "Sí",
     deadlineNo: "No",
     deadlineDate: "Fecha de entrega deseada",
+    plaatsbezoek: "Fecha preferida para la visita (opcional)",
     loc: { straat: "Calle", huisnummer: "Nº", postcode: "Código postal", gemeente: "Municipio", land: "País" },
     upload: {
       title: "Fotos y planos",
