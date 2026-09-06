@@ -26,6 +26,7 @@ from emailer import (
     send_new_lead_notification, send_customer_confirmation, send_custom_email, send_marketing_email,
 )
 from pdf import build_lead_pdf
+import mailbox as mbx
 from auth import (
     verify_password, create_access_token, decode_access_token, seed_admin,
 )
@@ -112,6 +113,16 @@ class Campaign(BaseModel):
     lead_ids: Optional[List[str]] = None
     category: Optional[str] = None
     status: Optional[str] = None
+
+
+class InboxSend(BaseModel):
+    from_account: str
+    to: str = Field(min_length=3, max_length=500)
+    cc: Optional[str] = Field(default=None, max_length=500)
+    subject: str = Field(default="", max_length=300)
+    body: str = Field(default="", max_length=20000)
+    in_reply_to: Optional[str] = None
+    references: Optional[str] = None
 
 
 # ----------------------------- Auth dep -----------------------------
@@ -439,6 +450,101 @@ async def admin_campaign(payload: Campaign, user=Depends(get_current_user)):
         else:
             failed += 1
     return {"recipients": len(recipients), "sent": sent, "failed": failed}
+
+
+# ----------------------------- Admin: Inbox (IMAP/SMTP) -----------------------------
+@api_router.get("/admin/mailboxes")
+async def admin_mailboxes(user=Depends(get_current_user)):
+    accounts = mbx.list_accounts()
+    counts = await asyncio.to_thread(mbx.unread_counts) if mbx.configured() else {}
+    for a in accounts:
+        a["unread"] = counts.get(a["key"], 0)
+    return {"configured": mbx.configured(), "accounts": accounts}
+
+
+@api_router.get("/admin/inbox")
+async def admin_inbox(
+    user=Depends(get_current_user),
+    account: str = Query("all"),
+    folder: str = Query("INBOX"),
+    limit: int = Query(30, le=100),
+    offset: int = Query(0),
+):
+    if not mbx.configured():
+        raise HTTPException(status_code=503, detail="Mailbox niet geconfigureerd.")
+    keys = list(mbx.ACCOUNTS.keys()) if account == "all" else [account]
+    keys = [k for k in keys if k in mbx.ACCOUNTS]
+    if not keys:
+        raise HTTPException(status_code=400, detail="Onbekend mailbox-account.")
+    results = await asyncio.gather(*[
+        asyncio.to_thread(mbx.fetch_messages, k, folder, limit, offset) for k in keys
+    ], return_exceptions=True)
+    messages = []
+    for r in results:
+        if isinstance(r, Exception):
+            logger.error("Inbox ophalen mislukt: %s", r)
+            continue
+        messages.extend(r)
+    messages.sort(key=lambda m: m.get("date") or "", reverse=True)
+    return messages[:limit] if account == "all" else messages
+
+
+@api_router.get("/admin/inbox/message")
+async def admin_inbox_message(
+    user=Depends(get_current_user),
+    account: str = Query(...),
+    uid: str = Query(...),
+    folder: str = Query("INBOX"),
+):
+    if account not in mbx.ACCOUNTS:
+        raise HTTPException(status_code=400, detail="Onbekend mailbox-account.")
+    msg = await asyncio.to_thread(mbx.fetch_message, account, uid, folder, True)
+    if not msg:
+        raise HTTPException(status_code=404, detail="Bericht niet gevonden.")
+    return msg
+
+
+@api_router.get("/admin/inbox/attachment")
+async def admin_inbox_attachment(
+    request: Request,
+    account: str = Query(...),
+    uid: str = Query(...),
+    folder: str = Query("INBOX"),
+    index: int = Query(...),
+    token: Optional[str] = Query(None),
+):
+    auth_token = _extract_token(request, token)
+    if not auth_token:
+        raise HTTPException(status_code=401, detail="Niet ingelogd.")
+    payload = decode_access_token(auth_token)
+    try:
+        u = await db.users.find_one({"_id": ObjectId(payload["sub"])})
+    except Exception:
+        u = None
+    if not u or u.get("role") != "admin":
+        raise HTTPException(status_code=401, detail="Niet gemachtigd.")
+    if account not in mbx.ACCOUNTS:
+        raise HTTPException(status_code=400, detail="Onbekend mailbox-account.")
+    att = await asyncio.to_thread(mbx.fetch_attachment, account, uid, folder, index)
+    if not att:
+        raise HTTPException(status_code=404, detail="Bijlage niet gevonden.")
+    return Response(content=att["data"], media_type=att["content_type"],
+                    headers={"Content-Disposition": f'attachment; filename="{att["filename"]}"'})
+
+
+@api_router.post("/admin/inbox/send")
+async def admin_inbox_send(payload: InboxSend, user=Depends(get_current_user)):
+    if payload.from_account not in mbx.ACCOUNTS:
+        raise HTTPException(status_code=400, detail="Onbekend afzenderaccount.")
+    if not payload.to.strip():
+        raise HTTPException(status_code=422, detail="Vul een ontvanger in.")
+    result = await asyncio.to_thread(
+        mbx.send_message, payload.from_account, payload.to, payload.subject or "(geen onderwerp)",
+        payload.body, payload.cc, payload.in_reply_to, payload.references,
+    )
+    if not result.get("ok"):
+        raise HTTPException(status_code=502, detail=result.get("error") or "E-mail versturen mislukt.")
+    return {"ok": True}
 
 
 app.include_router(api_router)

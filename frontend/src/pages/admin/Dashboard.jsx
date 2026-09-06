@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { LogOut, Search, RefreshCw, Flame, TrendingUp, Building2, Euro, Megaphone } from "lucide-react";
+import { LogOut, Search, RefreshCw, Flame, TrendingUp, Building2, Euro, Megaphone, Inbox as InboxIcon } from "lucide-react";
 import { api, authHeaders } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { CategoryBadge, ScoreBadge, StatusBadge } from "@/components/admin/badges";
@@ -68,6 +68,9 @@ export default function Dashboard() {
             <span className="hidden sm:inline font-body text-sm text-beto-muted border-l border-beto-border pl-3">Leadbeheer</span>
           </div>
           <div className="flex items-center gap-4">
+            <Link to="/admin/inbox" data-testid="nav-inbox" className="inline-flex items-center gap-2 rounded-lg border border-beto-border px-3.5 py-2 font-body text-sm font-medium text-beto-ink hover:border-beto-primary hover:text-beto-primary transition-colors">
+              <InboxIcon className="w-4 h-4" /> Inbox
+            </Link>
             <Link to="/admin/marketing" data-testid="nav-marketing" className="inline-flex items-center gap-2 rounded-lg border border-beto-border px-3.5 py-2 font-body text-sm font-medium text-beto-ink hover:border-beto-primary hover:text-beto-primary transition-colors">
               <Megaphone className="w-4 h-4" /> Mailmarketing
             </Link>
