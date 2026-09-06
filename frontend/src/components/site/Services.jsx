@@ -1,10 +1,10 @@
 import { Reveal } from "@/components/Reveal";
 import { useLang } from "@/i18n/LangContext";
 import {
-  Home, Building2, Store, Bath, ChefHat, Wrench, Hammer, PaintRoller,
+  PaintRoller, Paintbrush, Layers, Ruler, Hammer, SprayCan, Home, Building2,
 } from "lucide-react";
 
-const ICONS = [Home, Building2, Store, Bath, ChefHat, Wrench, Hammer, PaintRoller];
+const ICONS = [PaintRoller, Building2, Layers, Ruler, Hammer, Home, Paintbrush, SprayCan];
 
 const SectionLabel = ({ children }) => (
   <div className="flex items-center gap-3 mb-4">

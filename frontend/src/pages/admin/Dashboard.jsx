@@ -64,7 +64,7 @@ export default function Dashboard() {
       <header className="bg-white border-b border-beto-border sticky top-0 z-20">
         <div className="max-w-[1300px] mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="font-heading font-extrabold text-xl tracking-tight text-beto-ink">Beto<span className="text-beto-primary">Decor</span></span>
+            <span className="font-heading font-extrabold text-xl tracking-tight text-beto-ink">VHM <span className="text-beto-primary">Renovation</span></span>
             <span className="hidden sm:inline font-body text-sm text-beto-muted border-l border-beto-border pl-3">Leadbeheer</span>
           </div>
           <div className="flex items-center gap-4">
@@ -94,14 +94,14 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Kpi testid="kpi-new" label="Nieuwe leads" value={stats?.new ?? "—"} accent="#075985" icon={TrendingUp} />
           <Kpi testid="kpi-hot" label="HOT leads" value={stats?.by_category?.hot ?? "—"} accent="#991B1B" icon={Flame} />
-          <Kpi testid="kpi-total" label="Totaal aanvragen" value={stats?.total ?? "—"} accent="#9C5B3E" icon={Building2} />
+          <Kpi testid="kpi-total" label="Totaal aanvragen" value={stats?.total ?? "—"} accent="#1E5AA8" icon={Building2} />
           <Kpi testid="kpi-value" label="Totale projectwaarde" value={stats ? eur(stats.total_value) : "—"} accent="#166534" icon={Euro} />
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <Kpi testid="kpi-high" label="High priority" value={stats?.by_category?.high ?? "—"} accent="#92400E" />
           <Kpi testid="kpi-normal" label="Normaal" value={stats?.by_category?.normal ?? "—"} accent="#075985" />
           <Kpi testid="kpi-low" label="Lage prioriteit" value={stats?.by_category?.low ?? "—"} accent="#57534E" />
-          <Kpi testid="kpi-avg" label="Gem. budget" value={stats ? eur(stats.avg_budget) : "—"} accent="#9C5B3E" />
+          <Kpi testid="kpi-avg" label="Gem. budget" value={stats ? eur(stats.avg_budget) : "—"} accent="#1E5AA8" />
         </div>
 
         {/* Filters */}

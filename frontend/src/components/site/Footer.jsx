@@ -9,7 +9,7 @@ export const Footer = () => {
     <footer className="bg-beto-ink text-white">
       <div className="max-w-[1300px] mx-auto px-5 lg:px-8 pt-16 pb-10">
         <Link to={homePath(lang)} data-testid="footer-logo" className="font-heading font-extrabold text-3xl tracking-tight">
-          Beto<span className="text-beto-primary">Decor</span>
+          VHM <span className="text-beto-primary">Renovation</span>
         </Link>
         <p className="mt-4 max-w-md font-body text-sm text-white/60 leading-relaxed">{t.footer.blurb}</p>
 
@@ -42,10 +42,9 @@ export const Footer = () => {
           </div>
 
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-5">BetoDecor BV</p>
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-5">{SITE.name}</p>
             <p className="font-body text-sm text-white/60 leading-relaxed">
-              BTW {SITE.vat}<br />
-              IBAN {SITE.iban}
+              BTW {SITE.vat}{SITE.iban ? <><br />IBAN {SITE.iban}</> : null}
             </p>
           </div>
         </div>

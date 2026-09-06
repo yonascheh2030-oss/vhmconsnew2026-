@@ -1,4 +1,4 @@
-"""SMTP email for BetoDecor: transactional (notification + confirmation + manual)
+"""SMTP email for VHM Renovation: transactional (notification + confirmation + manual)
 and marketing templates. Branded, with a professional signature.
 Gracefully no-ops when SMTP is not configured, so lead capture never fails.
 """
@@ -13,17 +13,17 @@ from labels_nl import BUDGET, TIMING, CATEGORY, project_types_label
 logger = logging.getLogger(__name__)
 
 COMPANY = {
-    "name": "BetoDecor",
-    "tagline": "Totaalrenovatie & Bouw",
-    "address": "Konijnenstraat 16, 1930 Zaventem",
-    "phone": "+32 475 60 83 20",
-    "email": "roberto@betodecorexpert.be",
-    "vat": "BE 1010257176",
-    "site": "https://www.betodecorexpert.be",
-    "owner": "Roberto",
+    "name": "VHM Renovation",
+    "tagline": "Schilder- & afwerkingswerken",
+    "address": "Zoniënwoudlaan 333/101, 1640 Sint-Genesius-Rode",
+    "phone": "+32 499 91 57 86",
+    "email": "info@vhmconstructionrenovation.be",
+    "vat": "BE 0791.888.501",
+    "site": "https://www.vhmconstructionrenovation.be",
+    "owner": "Victor",
 }
-PRIMARY = "#9C5B3E"
-INK = "#1C1917"
+PRIMARY = "#1E5AA8"
+INK = "#0F2137"
 
 
 def _smtp_configured() -> bool:
@@ -85,7 +85,7 @@ def _shell(inner_html: str, signature: bool = True) -> str:
     <div style="background:#F5F5F4;padding:24px 0;">
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border:1px solid #E7E5E4;border-radius:10px;overflow:hidden;">
         <div style="background:{INK};padding:22px 28px;">
-          <p style="margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Beto<span style="color:{PRIMARY};">Decor</span></p>
+          <p style="margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px;">VHM <span style="color:{PRIMARY};">Renovation</span></p>
           <p style="margin:3px 0 0;font-size:11px;color:rgba(255,255,255,.6);letter-spacing:2px;text-transform:uppercase;">{COMPANY['tagline']}</p>
         </div>
         <div style="padding:28px;">
@@ -93,7 +93,7 @@ def _shell(inner_html: str, signature: bool = True) -> str:
           {sig}
         </div>
       </div>
-      <p style="text-align:center;color:#A8A29E;font-size:11px;margin-top:14px;font-family:Arial,sans-serif;">BetoDecor · {COMPANY['address']} · BTW {COMPANY['vat']}</p>
+      <p style="text-align:center;color:#A8A29E;font-size:11px;margin-top:14px;font-family:Arial,sans-serif;">VHM Renovation · {COMPANY['address']} · BTW {COMPANY['vat']}</p>
     </div>
     """
 
@@ -136,17 +136,17 @@ def send_new_lead_notification(lead: dict):
 
 # ---------------- Customer confirmation ----------------
 _CONFIRM = {
-    "nl": {"subject": "Bedankt voor uw renovatieaanvraag — BetoDecor", "title": "Bedankt voor uw renovatieaanvraag",
-           "hi": "Beste", "body": "We hebben uw projectgegevens goed ontvangen. BetoDecor bekijkt uw aanvraag zorgvuldig en neemt contact met u op om de mogelijkheden en een eventueel plaatsbezoek te bespreken.",
+    "nl": {"subject": "Bedankt voor uw aanvraag — VHM Renovation", "title": "Bedankt voor uw aanvraag",
+           "hi": "Beste", "body": "We hebben uw projectgegevens goed ontvangen. VHM Renovation bekijkt uw aanvraag zorgvuldig en neemt contact met u op om de mogelijkheden en een eventueel plaatsbezoek te bespreken.",
            "note": "Een definitieve offerte wordt pas opgesteld na beoordeling van het project en, indien nodig, een plaatsbezoek."},
-    "fr": {"subject": "Merci pour votre demande de rénovation — BetoDecor", "title": "Merci pour votre demande de rénovation",
-           "hi": "Bonjour", "body": "Nous avons bien reçu les détails de votre projet. BetoDecor examine votre demande avec soin et vous contactera pour discuter des possibilités et d'une éventuelle visite sur place.",
+    "fr": {"subject": "Merci pour votre demande — VHM Renovation", "title": "Merci pour votre demande",
+           "hi": "Bonjour", "body": "Nous avons bien reçu les détails de votre projet. VHM Renovation examine votre demande avec soin et vous contactera pour discuter des possibilités et d'une éventuelle visite sur place.",
            "note": "Un devis définitif ne sera établi qu'après évaluation du projet et, si nécessaire, une visite sur place."},
-    "en": {"subject": "Thank you for your renovation request — BetoDecor", "title": "Thank you for your renovation request",
-           "hi": "Dear", "body": "We have received your project details. BetoDecor will carefully review your request and contact you to discuss the possibilities and a possible site visit.",
+    "en": {"subject": "Thank you for your request — VHM Renovation", "title": "Thank you for your request",
+           "hi": "Dear", "body": "We have received your project details. VHM Renovation will carefully review your request and contact you to discuss the possibilities and a possible site visit.",
            "note": "A final quote is only drawn up after assessment of the project and, if necessary, a site visit."},
-    "es": {"subject": "Gracias por su solicitud de reforma — BetoDecor", "title": "Gracias por su solicitud de reforma",
-           "hi": "Hola", "body": "Hemos recibido los detalles de su proyecto. BetoDecor revisará su solicitud cuidadosamente y se pondrá en contacto con usted para hablar de las posibilidades y una posible visita.",
+    "es": {"subject": "Gracias por su solicitud — VHM Renovation", "title": "Gracias por su solicitud",
+           "hi": "Hola", "body": "Hemos recibido los detalles de su proyecto. VHM Renovation revisará su solicitud cuidadosamente y se pondrá en contacto con usted para hablar de las posibilidades y una posible visita.",
            "note": "Un presupuesto definitivo solo se elabora tras la evaluación del proyecto y, si es necesario, una visita."},
 }
 
@@ -188,7 +188,7 @@ def send_marketing_email(to_email: str, subject: str, body: str, cta_url: str = 
     if cta_url:
         cta = f"""
         <div style="text-align:center;margin:26px 0 6px;">
-          <a href="{cta_url}" style="display:inline-block;background:{PRIMARY};color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:bold;font-size:15px;padding:14px 30px;border-radius:999px;">{cta_label or 'Vraag een renovatieofferte aan'}</a>
+          <a href="{cta_url}" style="display:inline-block;background:{PRIMARY};color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:bold;font-size:15px;padding:14px 30px;border-radius:999px;">{cta_label or 'Vraag een offerte aan'}</a>
         </div>
         """
     inner = f"""
@@ -202,13 +202,13 @@ def send_marketing_email(to_email: str, subject: str, body: str, cta_url: str = 
     <div style="background:#F5F5F4;padding:24px 0;">
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border:1px solid #E7E5E4;border-radius:10px;overflow:hidden;">
         <div style="background:{INK};padding:18px 28px;text-align:center;">
-          <p style="margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Beto<span style="color:{PRIMARY};">Decor</span></p>
+          <p style="margin:0;font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px;">VHM <span style="color:{PRIMARY};">Renovation</span></p>
           <p style="margin:3px 0 0;font-size:11px;color:rgba(255,255,255,.6);letter-spacing:2px;text-transform:uppercase;">{COMPANY['tagline']}</p>
         </div>
         <div style="padding:28px;">{inner}</div>
         <div style="background:#F5F5F4;padding:18px 28px;text-align:center;border-top:1px solid #E7E5E4;">
           <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#78716C;">{COMPANY['name']} · {COMPANY['address']}<br>{COMPANY['phone']} · {COMPANY['email']}</p>
-          <p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:11px;color:#A8A29E;">U ontvangt deze e-mail omdat u contact had met BetoDecor.</p>
+          <p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:11px;color:#A8A29E;">U ontvangt deze e-mail omdat u contact had met VHM Renovation.</p>
         </div>
       </div>
     </div>

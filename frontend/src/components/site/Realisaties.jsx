@@ -33,7 +33,7 @@ export const Realisaties = () => {
               <div data-testid={`realisatie-${i}`} className="group relative w-full h-full overflow-hidden rounded-xl border border-beto-border">
                 <img
                   src={tile.src}
-                  alt={`BetoDecor realisatie ${tile.tag}`}
+                  alt={`VHM Renovation realisatie ${tile.tag}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-beto-ink/60 via-transparent to-transparent" />

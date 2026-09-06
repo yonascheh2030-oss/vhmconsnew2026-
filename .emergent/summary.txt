@@ -1,0 +1,116 @@
+<analysis>**original_problem_statement**: 
+The user wants to launch a new company using the existing application's theme and functionality (a clone/rebrand of the current BetoDecor app). The user also noted that there are some glitches in the newly implemented CRM Inbox, but they prefer to handle those in a separate fork and prioritize the rebranding for the new company right now.
+
+**User's preferred language**: 
+Dutch (Nederlands).
+INSTRUCT: The next agent MUST respond to the user in Dutch (Nederlands) ONLY.
+
+**what currently exists?** 
+A fully functional, multilingual (NL, FR, EN, ES) full-stack web application (React + FastAPI + MongoDB). It serves as a premium total renovation company platform featuring a 7-step intake wizard, automated lead scoring, an Admin CRM dashboard, PDF generation, email marketing, and a combined IMAP/SMTP CRM Inbox.
+
+**Last working item**: 
+    - Last item agent was working: The agent asked the user for the new company's details (name, domain, etc.) and explicitly warned them that changing the name in the current codebase will overwrite the existing BetoDecor project. The agent is waiting for the user's confirmation on whether they have successfully created a fork or if they explicitly want to overwrite the current codebase.
+    - Status: USER VERIFICATION PENDING
+    - Agent Testing Done: N/A
+    - Which testing method agent to use?: NA (No code changes made yet in this session)
+    - User Testing Done: N/A
+
+**All Pending/In progress Issue list**: 
+  - Issue 1: CRM Inbox bugs (er haperen)
+     - Attempted fixes: None yet in this session. User stated they want to address these in a separate fork or later.
+     - Next debug checklist: Check  and  for IMAP parsing or UI rendering issues once the user is ready to tackle this, or if they bring it up again. (Also keep in mind the server greylisting delay on ).
+     - Why fix this issue and what will be achieved with the fix?: Ensures seamless reading and replying of emails via the CRM.
+     - Status: BLOCKED / NOT STARTED (User requested to delay this)
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: Both
+     - Blocked on other issue: User wants to prioritize the new company rebrand first.
+
+**In progress Task List**: 
+  - Task 1: Rebrand application for the new company
+     - Where to resume: Await the user's response to the pending  prompt providing the new company name, logo details, and confirmation to overwrite or work within a new fork.
+     - What will be achieved with this?: A fully functional cloned system for the user's new business.
+     - Status: BLOCKED (Waiting for user details)
+     - Should Test frontend/backend/both after fix?: Both
+     - Blocked on something: Pending user response providing the new brand details.
+
+**Upcoming and Future Tasks**
+    Upcoming Tasks:
+    - P0: Execute the complete rebranding across the frontend, backend, email templates, and database seeders once the new company name is provided.
+    Future Tasks:
+    - P1: Add a second status button Offerte opgevolgd (Quote followed up) in the CRM so the admin knows who to call back (, ).
+    - P2: Automated Review Request: Send an automatic friendly review invitation (Google Reviews) via email after a lead's status is changed to Offerte verzonden ().
+
+**Completed work in this session**
+- Verified system health and existing code architecture.
+- Clarified user intent and shifted priority to the new project/rebrand task.
+- Warned the user about overwriting the current BetoDecor codebase without forking.
+
+**Earlier issues found/mentioned but not fixed**
+None.
+
+**Known issue recurrence from previous fork**
+  - Issue recurrence in previous fork: N/A
+  - Recurrence count: 0
+  - Status: NOT STARTED
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+React, Tailwind CSS, FastAPI, Motor (Async MongoDB), IMAP/SMTP native integrations, JWT Authentication.
+
+**key DB schema**
+  - : {id, status, score, formData, files, created_at}
+  - : {lead_id, type, subject, status, sent_at}
+  - : {email, password_hash}
+
+**changes in tech stack**
+  - None in this session.
+
+**All files of reference** 
+  - : Contains the current business logic and branding info (BetoDecor).
+  -  & : Environmental configurations that will likely need updates during the rebrand.
+  -  & : Main files where theme and wording changes will apply.
+
+**Areas that need refactoring**: 
+None identified yet.
+
+**key api endpoints**
+- : Retrieves leads for the dashboard.
+- : Submits a new lead form.
+- : Fetches emails from IMAP.
+
+**Critical Info for New Agent** 
+- **DO NOT START REBRANDING IMMEDIATELY:** The previous agent warned the user that renaming the application in this environment will overwrite the existing BetoDecor app. Wait for the user's response to the pending  to confirm if they are in a safe fork and what the new brand details are.
+- The user noted the CRM Inbox feature has glitches but explicitly wants to sideline that for now to focus on launching a new company with the same theme. Respect their prioritization.
+- Always communicate in Dutch.
+
+**documents and test reports created in this job** 
+  -  (Checked, not modified)
+  -  (Checked, not modified)
+
+**Last 10 User Messages and any pending HUMAN messages** 
+ - User requested to implement the inbox to send/receive emails. (Completed previously)
+ - User used  to configure IMAP details. (Completed previously)
+ - Agent sent  asking for priority, testing status, and upcoming bugs. (Completed)
+ - User replied to : Priority is a new project. Inbox has glitches but wants to fix them in another fork. Wants to launch the same theme with a different company name. (Completed)
+ - Agent sent : Warned the user about overwriting BetoDecor unless they make a fork first, and asked for the new company's name/details. (PENDING HUMAN MESSAGE)
+
+**Project Health Check:**
+Healthy.
+
+**3rd Party Integrations** 
+ - Emergent LLM Key: Not currently in active use for this flow.
+ - Live IMAP/SMTP (): Requires User API Key / Credentials (already stored in ).
+
+**Testing status**
+  - Testing agent used after significant changes: NO (No changes made).
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: None.
+  - Known regressions: None.
+
+**Credentials to test flow:**
+- Admin CRM Login: See 
+
+**What agent forgot to execute**
+Nothing. The agent stopped correctly to ensure the user doesn't accidentally overwrite their production codebase without confirming they are in a new fork.</analysis>

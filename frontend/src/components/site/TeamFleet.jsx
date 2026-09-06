@@ -12,10 +12,10 @@ export const TeamFleet = () => {
           <div className="relative">
             <div className="absolute -inset-3 rounded-2xl border border-beto-primary/20 translate-x-3 translate-y-3 pointer-events-none" />
             <div className="relative overflow-hidden rounded-2xl h-[320px] lg:h-[460px] shadow-[0_16px_50px_rgba(0,0,0,0.10)]">
-              <img src={IMAGES.team} alt="Het team van BetoDecor" className="w-full h-full object-cover" data-testid="team-image" />
+              <img src={IMAGES.team} alt="VHM Renovation vakman aan het werk" className="w-full h-full object-cover" data-testid="team-image" />
             </div>
             <div className="absolute -bottom-8 -right-3 lg:-right-8 w-44 lg:w-64 overflow-hidden rounded-xl border-4 border-beto-surface shadow-[0_12px_40px_rgba(0,0,0,0.18)]">
-              <img src={IMAGES.van} alt="BetoDecor bedrijfswagen" className="w-full h-full object-cover aspect-[4/3]" data-testid="van-image" />
+              <img src={IMAGES.van} alt="Schilderwerk detail — VHM Renovation" className="w-full h-full object-cover aspect-[4/3]" data-testid="van-image" />
             </div>
           </div>
         </Reveal>

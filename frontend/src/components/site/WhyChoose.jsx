@@ -19,7 +19,7 @@ export const WhyChoose = () => {
             {t.why.title}
           </h2>
           <div className="mt-8 relative overflow-hidden rounded-2xl h-[280px] lg:h-[360px] shadow-[0_16px_50px_rgba(0,0,0,0.08)]">
-            <img src={IMAGES.construction} alt="BetoDecor renovatiewerk" className="w-full h-full object-cover" data-testid="why-image" />
+            <img src={IMAGES.construction} alt="VHM Renovation schilder- en afwerkingswerk" className="w-full h-full object-cover" data-testid="why-image" />
             <div className="absolute inset-0 bg-gradient-to-t from-beto-ink/50 to-transparent" />
           </div>
         </div>

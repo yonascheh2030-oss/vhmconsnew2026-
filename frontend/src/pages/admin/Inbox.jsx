@@ -168,7 +168,7 @@ export default function Inbox() {
           <button onClick={() => navigate("/admin")} data-testid="inbox-back" className="inline-flex items-center gap-2 font-body text-sm font-medium text-beto-ink hover:text-beto-primary transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard
           </button>
-          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">Beto<span className="text-beto-primary">Decor</span></span>
+          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">VHM <span className="text-beto-primary">Renovation</span></span>
         </div>
       </header>
 

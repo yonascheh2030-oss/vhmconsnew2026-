@@ -39,7 +39,7 @@ mongo_url = os.environ["MONGO_URL"]
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ["DB_NAME"]]
 
-app = FastAPI(title="BetoDecor API")
+app = FastAPI(title="VHM Renovation API")
 api_router = APIRouter(prefix="/api")
 
 MAX_FILE_SIZE = 15 * 1024 * 1024
@@ -159,7 +159,7 @@ async def get_current_user(request: Request):
 # ----------------------------- Public: health -----------------------------
 @api_router.get("/")
 async def root():
-    return {"message": "BetoDecor API", "status": "online"}
+    return {"message": "VHM Renovation API", "status": "online"}
 
 
 # ----------------------------- Public: upload -----------------------------
@@ -395,7 +395,7 @@ async def admin_lead_pdf(lead_id: str, user=Depends(get_current_user)):
     if not doc:
         raise HTTPException(status_code=404, detail="Lead niet gevonden.")
     pdf_bytes = build_lead_pdf(doc)
-    fn = f"BetoDecor-aanvraag-{(doc.get('achternaam') or 'lead')}.pdf"
+    fn = f"VHM-Renovation-aanvraag-{(doc.get('achternaam') or 'lead')}.pdf"
     return Response(content=pdf_bytes, media_type="application/pdf",
                     headers={"Content-Disposition": f'attachment; filename="{fn}"'})
 

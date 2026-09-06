@@ -48,14 +48,14 @@ def decode_access_token(token: str) -> dict:
 
 
 async def seed_admin(db):
-    admin_email = os.environ.get("ADMIN_EMAIL", "admin@betodecor.be").lower()
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@vhmconstructionrenovation.be").lower()
     admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
     existing = await db.users.find_one({"email": admin_email})
     if existing is None:
         await db.users.insert_one({
             "email": admin_email,
             "password_hash": hash_password(admin_password),
-            "name": "Roberto",
+            "name": "Victor",
             "role": "admin",
             "created_at": datetime.now(timezone.utc).isoformat(),
         })

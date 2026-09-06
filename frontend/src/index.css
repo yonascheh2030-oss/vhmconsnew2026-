@@ -18,15 +18,15 @@ html.lenis body {
 body {
     margin: 0;
     font-family: "IBM Plex Sans", sans-serif;
-    background-color: #fdfcfb;
-    color: #1c1917;
+    background-color: #f5f8fc;
+    color: #0f2137;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 }
 
 ::selection {
-    background: #9c5b3e;
+    background: #1e5aa8;
     color: #ffffff;
 }
 
@@ -41,7 +41,7 @@ body {
     border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #9c5b3e;
+    background: #1e5aa8;
 }
 
 .font-heading {
@@ -53,15 +53,15 @@ body {
 
 @layer base {
     :root {
-        --background: 40 33% 99%;
-        --foreground: 20 14% 10%;
+        --background: 210 40% 98%;
+        --foreground: 213 57% 14%;
         --card: 0 0% 100%;
-        --card-foreground: 20 14% 10%;
+        --card-foreground: 213 57% 14%;
         --popover: 0 0% 100%;
-        --popover-foreground: 20 14% 10%;
-        --primary: 20 43% 43%;
+        --popover-foreground: 213 57% 14%;
+        --primary: 213 70% 39%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 24 6% 15%;
+        --secondary: 212 55% 16%;
         --secondary-foreground: 0 0% 98%;
         --muted: 60 5% 96%;
         --muted-foreground: 25 5% 45%;
@@ -71,8 +71,8 @@ body {
         --destructive-foreground: 0 0% 98%;
         --border: 20 6% 90%;
         --input: 20 6% 90%;
-        --ring: 20 43% 43%;
-        --chart-1: 20 43% 43%;
+        --ring: 213 70% 39%;
+        --chart-1: 213 70% 39%;
         --chart-2: 173 58% 39%;
         --chart-3: 197 37% 24%;
         --chart-4: 43 74% 66%;

@@ -19,7 +19,7 @@ export const Header = () => {
     <header className="fixed top-0 inset-x-0 z-50 bg-beto-paper/85 backdrop-blur-xl border-b border-beto-border">
       <div className="max-w-[1300px] mx-auto px-5 lg:px-8 h-[72px] flex items-center justify-between">
         <Link to={homePath(lang)} data-testid="header-logo" className="font-heading font-extrabold text-2xl tracking-tight text-beto-ink">
-          Beto<span className="text-beto-primary">Decor</span>
+          VHM <span className="text-beto-primary">Renovation</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8" data-testid="header-nav">

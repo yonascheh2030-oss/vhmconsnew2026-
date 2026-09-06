@@ -12,12 +12,12 @@ export default function Confirmation() {
     <div className="min-h-screen bg-beto-paper flex flex-col">
       <Helmet>
         <html lang={lang} />
-        <title>{`${c.title} — BetoDecor`}</title>
+        <title>{`${c.title} — VHM Renovation`}</title>
         <meta name="robots" content="noindex" />
       </Helmet>
       <header className="h-[72px] border-b border-beto-border flex items-center px-5 lg:px-8">
         <Link to={homePath(lang)} className="font-heading font-extrabold text-2xl tracking-tight text-beto-ink">
-          Beto<span className="text-beto-primary">Decor</span>
+          VHM <span className="text-beto-primary">Renovation</span>
         </Link>
       </header>
 

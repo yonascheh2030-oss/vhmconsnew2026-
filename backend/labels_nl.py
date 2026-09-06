@@ -1,17 +1,15 @@
 """Dutch label maps for backend PDF/email rendering (keys match scoring.py / frontend)."""
 
 PROJECT_TYPES = {
-    "woning": "Volledige woning", "appartement": "Appartement", "bedrijfspand": "Bedrijfspand",
-    "kantoor": "Kantoor", "handelsruimte": "Handelsruimte", "badkamer": "Badkamer",
-    "keuken": "Keuken", "andere": "Andere renovatie",
+    "woning": "Woning", "appartement": "Appartement", "nieuwbouw": "Nieuwbouw",
+    "handelsruimte": "Handels-/bedrijfsruimte", "kantoor": "Kantoor", "andere": "Andere",
 }
-RENO_TYPE = {"volledig": "Volledige renovatie", "gedeeltelijk": "Gedeeltelijke renovatie", "onzeker": "Nog niet zeker"}
+RENO_TYPE = {"volledig": "Volledig pand", "gedeeltelijk": "Enkele ruimtes", "onzeker": "Nog niet zeker"}
 BEWOOND = {"ja": "Ja", "nee": "Nee", "onbekend": "Onbekend"}
 WORKS = {
-    "afbraak": "Afbraakwerken", "ruwbouw": "Ruwbouw", "muren-verwijderen": "Muren verwijderen", "nieuwe-indeling": "Nieuwe indeling",
-    "elektriciteit": "Elektriciteit", "sanitair": "Sanitair", "verwarming": "Verwarming", "ventilatie": "Ventilatie", "waterleidingen": "Waterleidingen",
-    "badkamer": "Badkamer", "keuken": "Keuken", "vloeren": "Vloeren", "tegelwerken": "Tegelwerken", "pleisterwerken": "Pleisterwerken", "gyproc": "Gyproc", "schilderwerken": "Schilderwerken", "deuren": "Deuren", "afwerking": "Volledige afwerking",
-    "gevel": "Gevel", "dak": "Dak", "isolatie": "Isolatie", "andere-werk": "Andere",
+    "binnen": "Binnenschilderwerk", "buiten": "Buitenschilderwerk & gevel", "plafonds": "Plafonds", "behang": "Behangwerk",
+    "gyproc": "Gyproc-wanden plaatsen", "plamuren": "Plamuren & schuren", "herstellingen": "Herstellen scheuren & gaten", "vloerbekleding": "Vloerbekleding plaatsen",
+    "reinigen": "Reinigen & ontvetten", "afplakken": "Afplakken & afdekken", "schuren": "Schuren & voorstrijken",
 }
 BUDGET = {
     "lt10k": "< €10.000", "10-25k": "€10.000–€25.000", "25-50k": "€25.000–€50.000",

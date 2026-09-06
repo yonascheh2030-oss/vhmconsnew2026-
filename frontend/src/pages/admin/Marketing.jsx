@@ -47,7 +47,7 @@ export default function Marketing() {
     try {
       const payload = { subject, body };
       if (audience) payload.category = audience;
-      if (cta) { payload.cta_url = SITE.domain; payload.cta_label = "Vraag een renovatieofferte aan"; }
+      if (cta) { payload.cta_url = SITE.domain; payload.cta_label = "Vraag een offerte aan"; }
       const { data } = await api.post("/admin/campaign", payload, { headers: authHeaders() });
       if (data.recipients === 0) toast.warning("Geen ontvangers voor deze selectie.");
       else toast.success(`Verzonden naar ${data.sent} van ${data.recipients} ontvanger(s).`);
@@ -74,7 +74,7 @@ export default function Marketing() {
           <button onClick={() => navigate("/admin")} data-testid="marketing-back" className="inline-flex items-center gap-2 font-body text-sm font-medium text-beto-ink hover:text-beto-primary transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard
           </button>
-          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">Beto<span className="text-beto-primary">Decor</span></span>
+          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">VHM <span className="text-beto-primary">Renovation</span></span>
         </div>
       </header>
 
@@ -97,17 +97,17 @@ export default function Marketing() {
             <input data-testid="campaign-subject" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Bv. Plan uw renovatie voor het najaar" className="w-full rounded-lg border border-beto-borderstrong px-4 py-2.5 font-body text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-beto-primary/30 focus:border-beto-primary transition" />
 
             <label className="block font-body text-sm font-medium text-beto-ink mb-2">Bericht</label>
-            <textarea data-testid="campaign-body" rows={7} value={body} onChange={(e) => setBody(e.target.value)} placeholder={"Beste,\n\nBij BetoDecor verzorgen wij uw volledige renovatie van A tot Z…"} className="w-full rounded-lg border border-beto-borderstrong px-4 py-3 font-body text-sm resize-none mb-4 focus:outline-none focus:ring-2 focus:ring-beto-primary/30 focus:border-beto-primary transition" />
+            <textarea data-testid="campaign-body" rows={7} value={body} onChange={(e) => setBody(e.target.value)} placeholder={"Beste,\n\nBij VHM Renovation verzorgen wij uw schilder- en afwerkingswerken met oog voor detail…"} className="w-full rounded-lg border border-beto-borderstrong px-4 py-3 font-body text-sm resize-none mb-4 focus:outline-none focus:ring-2 focus:ring-beto-primary/30 focus:border-beto-primary transition" />
 
             <label className="flex items-center gap-2 font-body text-sm text-beto-ink mb-5">
               <input type="checkbox" data-testid="campaign-cta" checked={cta} onChange={(e) => setCta(e.target.checked)} className="w-4 h-4 accent-beto-primary" />
-              Knop "Vraag een renovatieofferte aan" toevoegen
+              Knop "Vraag een offerte aan" toevoegen
             </label>
 
             <button onClick={send} disabled={sending} data-testid="campaign-send" className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-beto-primary text-white px-6 py-3.5 font-body font-semibold hover:bg-beto-primaryhover transition-colors disabled:opacity-60">
               {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />} Campagne versturen
             </button>
-            <p className="mt-3 font-body text-xs text-beto-muted">De e-mail wordt verstuurd met een professionele BetoDecor-template en handtekening.</p>
+            <p className="mt-3 font-body text-xs text-beto-muted">De e-mail wordt verstuurd met een professionele VHM Renovation-template en handtekening.</p>
           </section>
 
           {/* Recent campaigns */}

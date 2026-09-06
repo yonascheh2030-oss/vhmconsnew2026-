@@ -1,4 +1,4 @@
-"""BetoDecor lead scoring engine (0-100).
+"""VHM Renovation lead scoring engine (0-100).
 
 Score = budget (30) + project type/size (25) + location (20) + timing (15) + completeness (10).
 Intelligent caps prevent e.g. a huge budget far outside the work area from scoring HOT.
@@ -40,20 +40,20 @@ TIMING_POINTS = {
 
 # ---- Work area (configurable) ----
 CORE_AREAS = {
-    "zaventem", "nossegem", "sint-stevens-woluwe", "machelen", "diegem",
-    "vilvoorde", "kraainem",
+    "sint-genesius-rode", "rhode-saint-genèse", "rhode-saint-genese", "linkebeek",
+    "drogenbos", "beersel", "alsemberg", "huizingen", "dworp", "ukkel", "uccle",
 }
 NEAR_AREAS = {
-    "brussel", "bruxelles", "brussels", "evere", "haren", "schaarbeek", "schaerbeek",
-    "kortenberg", "steenokkerzeel", "melsbroek", "perk", "grimbergen",
-    "wezembeek-oppem", "wemmel", "leuven", "louvain", "meise",
-    "zaventem-airport", "erps-kwerps", "everberg", "sterrebeek",
+    "brussel", "bruxelles", "brussels", "vorst", "forest", "sint-gillis", "saint-gilles",
+    "elsene", "ixelles", "watermaal-bosvoorde", "watermael-boitsfort", "oudergem", "auderghem",
+    "waterloo", "eigenbrakel", "braine-l'alleud", "halle", "hoeilaart", "overijse",
+    "la hulpe", "terhulpen", "sint-pieters-leeuw", "lot", "buizingen", "tervuren",
 }
 
-CORE_POSTCODES = {"1930", "1831", "1830", "1800", "1950", "1932", "1933"}
+CORE_POSTCODES = {"1640", "1630", "1620", "1650", "1180", "1428", "1470"}
 CORE_POSTCODES_INT = {int(p) for p in CORE_POSTCODES}
 BRUSSELS_POSTCODES = range(1000, 1300)
-VL_BRABANT_POSTCODES = list(range(1500, 2000)) + list(range(3000, 3500))
+VL_BRABANT_POSTCODES = list(range(1300, 2000)) + list(range(3000, 3500))
 
 
 def _norm(s):
@@ -97,24 +97,22 @@ def project_score(project_types, renovatie_type, works, oppervlakte):
         base = 25
     elif "woning" in types or "bedrijfspand" in types:
         base = 20
+    elif "nieuwbouw" in types:
+        base = 23
+    elif ("handelsruimte" in types or "kantoor" in types) and full:
+        base = 21
+    elif "handelsruimte" in types or "kantoor" in types:
+        base = 18
     elif "appartement" in types and full:
-        base = 22
+        base = 20
     elif "appartement" in types:
         base = 16
-    elif "kantoor" in types or "handelsruimte" in types:
-        base = 18
-    elif "badkamer" in types and "keuken" in types:
-        base = 17
-    elif "badkamer" in types:
-        base = 14 if n_works >= 3 else 12
-    elif "keuken" in types:
-        base = 10
     else:
-        base = 8
+        base = 10
 
-    if n_works >= 8:
+    if n_works >= 6:
         base += 4
-    elif n_works >= 5:
+    elif n_works >= 3:
         base += 2
 
     try:

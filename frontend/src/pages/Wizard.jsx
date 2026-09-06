@@ -161,13 +161,13 @@ export default function Wizard() {
     <div className="min-h-screen bg-beto-paper flex flex-col">
       <Helmet>
         <html lang={lang} />
-        <title>{`${w.heading} — BetoDecor`}</title>
+        <title>{`${w.heading} — VHM Renovation`}</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
       <header className="h-[72px] border-b border-beto-border bg-beto-paper/85 backdrop-blur-xl sticky top-0 z-30 flex items-center justify-between px-5 lg:px-8">
         <Link to={homePath(lang)} className="font-heading font-extrabold text-2xl tracking-tight text-beto-ink">
-          Beto<span className="text-beto-primary">Decor</span>
+          VHM <span className="text-beto-primary">Renovation</span>
         </Link>
         <LangSwitch />
       </header>
@@ -403,7 +403,7 @@ const StepLocation = ({ form, set, w }) => (
     <div className="sm:col-span-4"><label className={labelCls}>{w.loc.straat}</label><input data-testid="loc-straat" value={form.straat} onChange={set("straat")} className={inputCls} /></div>
     <div className="sm:col-span-2"><label className={labelCls}>{w.loc.huisnummer}</label><input data-testid="loc-huisnummer" value={form.huisnummer} onChange={set("huisnummer")} className={inputCls} /></div>
     <div className="sm:col-span-2"><label className={labelCls}>{w.loc.postcode}</label><input data-testid="loc-postcode" value={form.postcode} onChange={set("postcode")} className={inputCls} placeholder="1930" /></div>
-    <div className="sm:col-span-4"><label className={labelCls}>{w.loc.gemeente}</label><input data-testid="loc-gemeente" value={form.gemeente} onChange={set("gemeente")} className={inputCls} placeholder="Zaventem" /></div>
+    <div className="sm:col-span-4"><label className={labelCls}>{w.loc.gemeente}</label><input data-testid="loc-gemeente" value={form.gemeente} onChange={set("gemeente")} className={inputCls} placeholder="Sint-Genesius-Rode" /></div>
     <div className="sm:col-span-6"><label className={labelCls}>{w.loc.land}</label><input data-testid="loc-land" value={form.land} onChange={set("land")} className={inputCls} /></div>
   </div>
 );

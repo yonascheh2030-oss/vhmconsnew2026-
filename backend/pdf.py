@@ -13,8 +13,8 @@ from labels_nl import (
     project_types_label, works_label,
 )
 
-PRIMARY = colors.HexColor("#9C5B3E")
-INK = colors.HexColor("#1C1917")
+PRIMARY = colors.HexColor("#1E5AA8")
+INK = colors.HexColor("#0F2137")
 MUTED = colors.HexColor("#78716C")
 LINE = colors.HexColor("#E7E5E4")
 DASH = colors.HexColor("#F5F5F4")
@@ -53,7 +53,7 @@ def build_lead_pdf(lead: dict) -> bytes:
     naam = f"{lead.get('voornaam','')} {lead.get('achternaam','')}".strip()
     doc = SimpleDocTemplate(
         buf, pagesize=A4, topMargin=18 * mm, bottomMargin=16 * mm,
-        leftMargin=18 * mm, rightMargin=18 * mm, title=f"Renovatieaanvraag {naam}",
+        leftMargin=18 * mm, rightMargin=18 * mm, title=f"Offerteaanvraag {naam}",
     )
     base = getSampleStyleSheet()
     styles = {
@@ -70,8 +70,8 @@ def build_lead_pdf(lead: dict) -> bytes:
 
     story = []
     # Header row: brand + score box
-    brand = Paragraph("<font color='#1C1917'><b>Beto</b></font><font color='#9C5B3E'><b>Decor</b></font>", ParagraphStyle("b", fontName="Helvetica-Bold", fontSize=20, leading=22))
-    tagline = Paragraph("<font color='#78716C'>TOTAALRENOVATIE &amp; BOUW</font>", styles["tag"])
+    brand = Paragraph("<font color='#0F2137'><b>VHM </b></font><font color='#1E5AA8'><b>Renovation</b></font>", ParagraphStyle("b", fontName="Helvetica-Bold", fontSize=20, leading=22))
+    tagline = Paragraph("<font color='#78716C'>SCHILDER- &amp; AFWERKINGSWERKEN</font>", styles["tag"])
     left = Table([[brand], [tagline]], colWidths=[95 * mm])
     left.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("TOPPADDING", (0, 0), (-1, -1), 0), ("BOTTOMPADDING", (0, 0), (-1, -1), 2)]))
 
@@ -89,7 +89,7 @@ def build_lead_pdf(lead: dict) -> bytes:
     header.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
     story.append(header)
     story.append(Spacer(1, 10))
-    story.append(Paragraph("Renovatieaanvraag", styles["h1"]))
+    story.append(Paragraph("Offerteaanvraag", styles["h1"]))
     story.append(Paragraph(f"<font color='#78716C'>Ingediend op {_fmt_date(lead.get('created_at'))}</font>", styles["muted"]))
     story.append(Spacer(1, 14))
 
@@ -140,7 +140,7 @@ def build_lead_pdf(lead: dict) -> bytes:
     disc_box.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), DASH), ("LEFTPADDING", (0, 0), (-1, -1), 10), ("RIGHTPADDING", (0, 0), (-1, -1), 10), ("TOPPADDING", (0, 0), (-1, -1), 8), ("BOTTOMPADDING", (0, 0), (-1, -1), 8), ("LINEBEFORE", (0, 0), (0, -1), 3, PRIMARY)]))
     story.append(disc_box)
     story.append(Spacer(1, 14))
-    story.append(Paragraph("BetoDecor · Konijnenstraat 16, 1930 Zaventem · +32 475 60 83 20 · roberto@betodecorexpert.be · BTW BE 1010257176", styles["muted"]))
+    story.append(Paragraph("VHM Renovation · Zoniënwoudlaan 333/101, 1640 Sint-Genesius-Rode · +32 499 91 57 86 · info@vhmconstructionrenovation.be · BTW BE 0791.888.501", styles["muted"]))
 
     doc.build(story)
     return buf.getvalue()

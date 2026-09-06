@@ -1,5 +1,5 @@
-"""IMAP/SMTP mailbox for the BetoDecor admin inbox.
-Reads and sends real e-mail for the roberto@ and info@ mailboxes on mailprotect.be.
+"""IMAP/SMTP mailbox for the VHM Renovation admin inbox.
+Reads and sends real e-mail for the configured mailboxes.
 Blocking calls (imaplib/smtplib) are meant to be run via asyncio.to_thread.
 """
 import os
@@ -31,7 +31,7 @@ def _accounts() -> dict:
     accts = {}
     r_user, r_pass = os.environ.get("SMTP_USER"), os.environ.get("SMTP_PASSWORD")
     if r_user and r_pass:
-        accts["roberto"] = {"key": "roberto", "email": r_user, "password": r_pass, "label": "Roberto"}
+        accts["roberto"] = {"key": "roberto", "email": r_user, "password": r_pass, "label": "VHM"}
     i_user, i_pass = os.environ.get("INFO_EMAIL"), os.environ.get("INFO_PASSWORD")
     if i_user and i_pass:
         accts["info"] = {"key": "info", "email": i_user, "password": i_pass, "label": "Info"}
@@ -325,7 +325,7 @@ def send_message(account_key: str, to: str, subject: str, body: str,
     if cc:
         msg["Cc"] = cc
     msg["Date"] = formatdate(localtime=True)
-    msg["Message-ID"] = make_msgid(domain="betodecorexpert.be")
+    msg["Message-ID"] = make_msgid(domain="vhmconstructionrenovation.be")
     if in_reply_to:
         msg["In-Reply-To"] = in_reply_to
         msg["References"] = (references or in_reply_to)

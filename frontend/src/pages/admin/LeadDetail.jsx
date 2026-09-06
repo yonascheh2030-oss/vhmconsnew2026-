@@ -93,7 +93,7 @@ export default function LeadDetail() {
       const url = URL.createObjectURL(res.data);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `BetoDecor-aanvraag-${lead?.achternaam || "lead"}.pdf`;
+      a.download = `VHM-Renovation-aanvraag-${lead?.achternaam || "lead"}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -160,7 +160,7 @@ export default function LeadDetail() {
           <button onClick={() => navigate("/admin")} data-testid="detail-back" className="inline-flex items-center gap-2 font-body text-sm font-medium text-beto-ink hover:text-beto-primary transition-colors">
             <ArrowLeft className="w-4 h-4" /> Terug
           </button>
-          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">Beto<span className="text-beto-primary">Decor</span></span>
+          <span className="font-heading font-extrabold text-lg tracking-tight text-beto-ink">VHM <span className="text-beto-primary">Renovation</span></span>
         </div>
       </header>
 
@@ -184,7 +184,7 @@ export default function LeadDetail() {
               <Action href={`tel:${lead.telefoon}`} icon={Phone} label="Bellen" testid="action-call" />
               <Action href={`mailto:${lead.email}`} icon={Mail} label="E-mail" testid="action-email" />
               {digits && <Action href={`https://wa.me/${digits}`} icon={MessageCircle} label="WhatsApp" testid="action-whatsapp" />}
-              <Action href={`mailto:${lead.email}?subject=Plaatsbezoek%20BetoDecor`} icon={CalendarClock} label="Plaatsbezoek" testid="action-visit" />
+              <Action href={`mailto:${lead.email}?subject=Plaatsbezoek%20VHM%20Renovation`} icon={CalendarClock} label="Plaatsbezoek" testid="action-visit" />
             </div>
           </div>
 
@@ -269,7 +269,7 @@ export default function LeadDetail() {
             {/* E-mail: versturen + geschiedenis */}
             <section className="rounded-xl border border-beto-border bg-white p-6" data-testid="email-section">
               <h2 className="font-heading font-bold text-lg text-beto-ink mb-1">E-mail naar klant</h2>
-              <p className="font-body text-sm text-beto-muted mb-4">Wordt verzonden met de professionele BetoDecor-handtekening.</p>
+              <p className="font-body text-sm text-beto-muted mb-4">Wordt verzonden met de professionele VHM Renovation-handtekening.</p>
               <input
                 data-testid="email-subject"
                 value={subject}

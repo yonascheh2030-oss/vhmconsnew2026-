@@ -103,7 +103,7 @@ export const Hero = () => {
               <motion.img
                 style={{ y: imgY, scale: 1.15 }}
                 src={IMAGES.hero}
-                alt="BetoDecor totaalrenovatie interieur"
+                alt="VHM Renovation strak geschilderd interieur"
                 className="w-full h-full object-cover"
                 data-testid="hero-image"
               />
@@ -114,8 +114,8 @@ export const Hero = () => {
               transition={{ duration: 0.8, delay: 0.9 }}
               className="absolute -bottom-6 left-6 bg-white rounded-xl border border-beto-border ring-1 ring-black/5 px-6 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.12)]"
             >
-              <p className="font-heading font-extrabold text-xl text-beto-ink leading-none">Zaventem · Brussel</p>
-              <p className="font-body text-xs uppercase tracking-wider text-beto-muted mt-1.5">Vlaams-Brabant & omstreken</p>
+              <p className="font-heading font-extrabold text-xl text-beto-ink leading-none">Rode · Brussel-Zuid</p>
+              <p className="font-body text-xs uppercase tracking-wider text-beto-muted mt-1.5">Brabant & omstreken</p>
             </motion.div>
           </motion.div>
         </div>

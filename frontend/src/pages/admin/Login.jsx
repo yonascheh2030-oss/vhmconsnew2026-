@@ -32,7 +32,7 @@ export default function AdminLogin() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <p className="font-heading font-extrabold text-3xl tracking-tight text-white">
-            Beto<span className="text-beto-primary">Decor</span>
+            VHM <span className="text-beto-primary">Renovation</span>
           </p>
           <p className="mt-2 font-body text-sm text-white/50 uppercase tracking-[0.2em]">Leadbeheer</p>
         </div>
@@ -49,7 +49,7 @@ export default function AdminLogin() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full rounded-lg border border-beto-borderstrong px-4 py-3 font-body focus:outline-none focus:ring-2 focus:ring-beto-primary/40 focus:border-beto-primary transition mb-5"
-            placeholder="roberto@betodecorexpert.be"
+            placeholder="admin@vhmconstructionrenovation.be"
           />
           <label className="block font-body text-sm font-medium text-beto-ink mb-2">Wachtwoord</label>
           <input
