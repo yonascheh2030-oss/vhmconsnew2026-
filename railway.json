@@ -1,0 +1,9 @@
+{
+  "variables": {
+    "MONGO_URL": "mongodb://...",
+    "DB_NAME": "vhm_renovation",
+    "SECRET_KEY": "${{ secret() }}",
+    "CORS_ORIGINS": "${{ frontend.RAILWAY_PUBLIC_DOMAIN }}",
+    "MAILBOX_ENABLED": "false"
+  }
+}
